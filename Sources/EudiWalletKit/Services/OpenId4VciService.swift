@@ -839,6 +839,12 @@ public final class OpenId4VCIServiceRegistry: @unchecked Sendable {
 	public func get(name: String) -> OpenId4VCIService? {
 		lock.lock()
 		defer { lock.unlock() }
+
+		guard let host = extractHost(from: name) else {
+        	return nil
+    	}
+
+		
 		return services[name]
 	}
 
@@ -852,3 +858,4 @@ public final class OpenId4VCIServiceRegistry: @unchecked Sendable {
 		return await getAllServices().getByIssuerURL(issuerURL)
 	}
 }
+
